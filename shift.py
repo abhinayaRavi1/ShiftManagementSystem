@@ -6,12 +6,14 @@ import db_schema
 def display_emp_details():
     print('Employee Details')
     for user in db_schema.EmpDetails.objects:
-        print(str(user.emp_id)+" "+ user.first_name+" "+user.last_name+" "+user.dining_hall+" "+" ".join(user.slot_hours)+" " +str(user.no_of_hours))
+        print(str(user.emp_id)+" " + user.first_name+" "+user.last_name+" "+user.dining_hall+" "+" ".join(user.slot_hours)+" " + str(user.no_of_hours))
 
 
 # Give cover
 def give_cover():
-    pass
+    #User id and slot to give - IP
+    #Backend - mark that slot
+    emp_id, slot_time = input("Enter employee id and slot to give").split()
 
 
 # Take cover
