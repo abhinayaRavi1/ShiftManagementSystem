@@ -1,5 +1,3 @@
-import db_create_data
-import db_schema
 import pymongo
 from pprint import pprint
 
@@ -14,7 +12,7 @@ TEST_DATA = [
     },
     {
         'emp_id': 678901,
-        'first_name':'Adam',
+        'first_name': 'Adam',
         'last_name': 'Green',
         'dining_hall': 'Hinman',
         'slot_hours': {"Tue": "6pm-9pm"},
@@ -30,30 +28,25 @@ TEST_DATA = [
     }
 ]
 
-# # Employee details
-# def display_emp_details():
-#     print('Employee Details')
-#     for user in db_schema.EmpDetails.objects:
-#         print(str(user.emp_id)+" " + user.first_name+" "+user.last_name+" "+user.dining_hall+" "+" ".join(user.slot_hours)+" " + str(user.no_of_hours))
 
-#Employee details
+# Employee details
 def display_emp_details(emp_db):
     print("Employee Details:")
     cursor = emp_db.find()
     for doc in cursor:
         pprint(doc)
 
+
 # Give cover
-def give_cover():
-    #User id and slot to give - IP
-    #Backend - mark that slot
+def give_cover(db):
     emp_id, slot_time = input("Enter employee id and slot to give").split()
-    print(emp_id, slot_time)
-    
+    db.coverPool.insert_one({'emp_id': emp_id, 'slot_time': slot_time})
+    print("Tested")
 
 # Take cover
 def take_cover():
     pass
+
 
 def main():
 
@@ -75,14 +68,19 @@ def main():
         if choice == 1:
             display_emp_details(emp_db)
         elif choice == 2:
-            give_cover()
+            give_cover(db)
         elif choice == 3:
-            pass
+            take_cover()
         elif choice == 4:
-            pass
+            print("Adios!")
+            exit(0)
         else:
             print("Enter valid option")
+
+    db.drop_collection('empDetails')
+    client.close()
 
 
 if __name__ == '__main__':
     main()
+
