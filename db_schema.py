@@ -9,4 +9,6 @@ class EmpDetails(mongoengine.Document):
     slot_hours = mongoengine.DictField()
     no_of_hours = mongoengine.FloatField(max_value=20.0)
 
+# class CoverPool
+#class CoverPool(mongoengine.Document):
 

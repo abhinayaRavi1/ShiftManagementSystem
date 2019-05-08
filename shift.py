@@ -44,10 +44,32 @@ def give_cover(db):
     print("Tested")
 
 # Take cover
-def take_cover():
-    pass
+def take_cover(db):
+
+    print("Displaying the Cover Pool table")
+    cover_db = db['coverPool']
+    cur1 = cover_db.find()
+    for dc in cur1:
+        pprint(dc)
+
+    ''' 
+        If a person can take cover, then the following conditions are to be met:
+            1. If the shift clashes with his own
+            2. If the number of work hours is greater than 20
+    '''
+    emp_db = db['empDetails']
+    empIdIn = int(input("Enter your employee ID"))
+    '''
+    Query empDetails 
+    '''
+    query = {'emp_id': empIdIn}
+    myDoc = emp_db.find(query)
+    for doc in myDoc:
+        pprint(doc)
 
 
+
+# Driver function
 def main():
 
     uri = "mongodb://localhost:27017/"
@@ -70,7 +92,7 @@ def main():
         elif choice == 2:
             give_cover(db)
         elif choice == 3:
-            take_cover()
+            take_cover(db)
         elif choice == 4:
             print("Adios!")
             exit(0)
