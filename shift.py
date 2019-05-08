@@ -58,24 +58,25 @@ def take_cover(db):
             2. If the number of work hours is greater than 20
     '''
     emp_db = db['empDetails']
-    empIdIn = int(input("Enter your employee ID"))
+    emp_id_in = int(input("Enter your employee ID"))
     '''
     Query empDetails 
     '''
-    query = {'emp_id': empIdIn}
-    myDoc = emp_db.find(query)
-    for doc in myDoc:
-        pprint(doc)
-
-
+    res = []
+    my_doc = emp_db.find({'emp_id': emp_id_in}, {'no_of_hours': 1})
+    for doc in my_doc:
+        res.append(doc)
+    print(res)
 
 # Driver function
 def main():
+
 
     uri = "mongodb://localhost:27017/"
     client = pymongo.MongoClient(uri)
     db = client["employee"]
     emp_db = db["empDetails"]
+
     emp_db.insert_many(TEST_DATA)
     
     choice = -1
@@ -95,11 +96,11 @@ def main():
             take_cover(db)
         elif choice == 4:
             print("Adios!")
-            exit(0)
+            # exit(0)
         else:
             print("Enter valid option")
 
-    db.drop_collection('empDetails')
+    db.empDetails.delete({})
     client.close()
 
 
